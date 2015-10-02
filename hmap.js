@@ -1,6 +1,7 @@
 var express = require('express');
 var http = require('http');
 var PF = require('pathfinding');
+var _ = require('underscore');
 
 var matrix = [
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -39,6 +40,19 @@ app.load_grid  = function(location){
   return originalGrid.clone();
 }
 
+app.addMarkersToPath = function(path){
+  return _.map(path, function(item) {
+
+    var itemMarkers = _.filter(markers, function(marker){
+        return item[0] === marker[0] && item[1] === marker[1];
+    });
+
+    if(itemMarkers.length > 0 ){
+      item.push(itemMarkers);
+    }
+    return item;
+  });
+};
 
 // Actual query
 app.get('/directions/:location', function (req, res, next) {
@@ -54,7 +68,9 @@ app.get('/directions/:location', function (req, res, next) {
 
   var path = app.resolve(position[0], position[1], destination[0], destination[1], app.load_grid(location));
 
-  res.json(path);
+  var enhancedPath = app.addMarkersToPath(path);
+
+  res.json(enhancedPath);
 });
 
 // Standalone server setup
