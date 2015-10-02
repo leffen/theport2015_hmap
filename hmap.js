@@ -23,7 +23,7 @@ var markers = [
   [2, 9, "M6"]
 ];
 
-var grid = new PF.Grid(matrix);
+var originalGrid = new PF.Grid(matrix);
 var finder = new PF.AStarFinder();
 
 // Express and middlewares
@@ -43,7 +43,8 @@ app.get('/directions/:location', function (req, res, next) {
 
   console.log(position[0], position[1], destination[0], destination[1]);
 
-  var path = finder.findPath(position[0], position[1], destination[0], destination[1], grid);
+  var currentGrid = originalGrid.clone();
+  var path = finder.findPath(position[0], position[1], destination[0], destination[1], currentGrid);
 
   res.json(path);
 });
