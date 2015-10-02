@@ -35,15 +35,17 @@ app.get('/directions/:location', function (req, res, next) {
   // console.log(req);
   console.log(req.params);
   location = req.params.location; // Maps to hospital
-  position = req.query.position;
+  position = JSON.parse(req.query.position);
   direction = req.query.direction;  //
-  destination = req.query.destination;
+  destination = JSON.parse(req.query.destination);
 
   console.log(location,position, direction, destination);
 
-  var path = finder.findPath(1, 2, 4, 2, grid);
+  console.log(position[0], position[1], destination[0], destination[1]);
 
-  res.json([[1, 2], [2, 3]]);
+  var path = finder.findPath(position[0], position[1], destination[0], destination[1], grid);
+
+  res.json(path);
 });
 
 // Standalone server setup
