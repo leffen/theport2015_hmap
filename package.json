@@ -5,8 +5,9 @@
   "main": "hmap.js",
   "dependencies": {
     "express": "^4.13.3",
+    "pathfinding": "^0.4.17",
     "seneca": "^0.6.5",
-    "pathfinding": "^0.4.17"
+    "underscore": "^1.8.3"
   },
   "devDependencies": {},
   "scripts": {

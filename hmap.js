@@ -1,6 +1,7 @@
 var express = require('express');
 var http = require('http');
 var PF = require('pathfinding');
+
 var matrix = [
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -23,11 +24,16 @@ var markers = [
   [2, 9, "M6"]
 ];
 
-var grid = new PF.Grid(matrix);
-var finder = new PF.AStarFinder();
+
 
 // Express and middlewares
 var app = express();
+
+app.resolve = function(x1,y1,x2,y2,grid) {
+  var finder = new PF.AStarFinder();
+
+ return finder.findPath(position[0], position[1], destination[0], destination[1], grid);
+};
 
 
 // Actual query
@@ -43,7 +49,9 @@ app.get('/directions/:location', function (req, res, next) {
 
   console.log(position[0], position[1], destination[0], destination[1]);
 
-  var path = finder.findPath(position[0], position[1], destination[0], destination[1], grid);
+  var grid = new PF.Grid(matrix);
+
+  var path = app.resolve(position[0], position[1], destination[0], destination[1], grid);
 
   res.json(path);
 });
