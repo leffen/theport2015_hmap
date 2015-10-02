@@ -23,8 +23,8 @@ var markers = [
   [6, 9, "M5"],
   [2, 9, "M6"]
 ];
-
-
+var originalGrid = new PF.Grid(matrix);
+var finder = new PF.AStarFinder();
 
 // Express and middlewares
 var app = express();
@@ -34,6 +34,10 @@ app.resolve = function(x1,y1,x2,y2,grid) {
 
  return finder.findPath(position[0], position[1], destination[0], destination[1], grid);
 };
+
+app.load_grid  = function(location){
+  return originalGrid.clone();
+}
 
 
 // Actual query
@@ -46,12 +50,9 @@ app.get('/directions/:location', function (req, res, next) {
   destination = JSON.parse(req.query.destination);
 
   console.log(location,position, direction, destination);
-
   console.log(position[0], position[1], destination[0], destination[1]);
 
-  var grid = new PF.Grid(matrix);
-
-  var path = app.resolve(position[0], position[1], destination[0], destination[1], grid);
+  var path = app.resolve(position[0], position[1], destination[0], destination[1], app.load_grid(location));
 
   res.json(path);
 });
