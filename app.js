@@ -1,5 +1,6 @@
 var express = require('express');
 var logger = require('morgan');
+var map_enhancer = require('./source/map_enhancer.js');
 
 var app = express();
 
@@ -28,7 +29,8 @@ app.get('/api/directions/:location', function (req, res, next) {
   direction = req.query.direction;  //
   destination = JSON.parse(req.query.destination);
 
-  var path = app.resolve(position[0], position[1], destination[0], destination[1], app.load_grid(location));
+  var grid = map_enhancer.load_grid(1);
+  var path = map_enhancer.resolve(position[0], position[1], destination[0], destination[1], grid);
 
   res.json(path);
 });
