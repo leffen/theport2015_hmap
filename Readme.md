@@ -9,3 +9,6 @@ node hmap.js
 
 test from browser
 http://localhost:3001/directions/10?position=[1,2]&direction=270&destination=[5,6]
+
+Continous testing
+gulp watch-test
