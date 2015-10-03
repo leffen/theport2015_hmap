@@ -31,8 +31,9 @@ app.get('/api/directions/:location', function (req, res, next) {
 
   var grid = map_enhancer.load_grid(1);
   var path = map_enhancer.resolve(position[0], position[1], destination[0], destination[1], grid);
+  var pathWithMarkers = map_enhancer.add_markers_to_path(path);
 
-  res.json(path);
+  res.json(pathWithMarkers);
 });
 
 
