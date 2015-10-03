@@ -73,6 +73,47 @@ app.get('/directions/:location', function (req, res, next) {
   res.json(enhancedPath);
 });
 
+app.get('/instructions/:location', function (req, res, next) {
+  location = req.params.location; // Maps to hospital
+  position = JSON.parse(req.query.position);
+  direction = req.query.direction;  //
+  destination = JSON.parse(req.query.destination);
+
+  var path = app.resolve(position[0], position[1], destination[0], destination[1], app.load_grid(location));
+
+  var enhancedPath = app.addMarkersToPath(path);
+
+  var getNextDirection = function(currentPosition, nextPosition){
+    if(currentPosition[0] == nextPosition[0]){
+        if(currentPosition[1] > nextPosition[1]){
+            return "W";
+        }else{
+          return "E";
+        }
+    }else if(currentPosition[1] == nextPosition[1]){
+      if(currentPosition[0] > nextPosition[0]){
+          return "N";
+      }else {
+          return "S";
+      }
+    }
+
+  };
+
+  var directions = [direction];
+
+  for (var i = 0; i < enhancedPath.length-1; ++i) {
+    var currentPosition = enhancedPath[i];
+    var nextPosition = enhancedPath[i+1];
+    var nextDirection = getNextDirection(currentPosition, nextPosition);
+    directions.push(nextDirection);
+  }
+
+  res.json(directions);
+});
+
+
+
 // Standalone server setup
 var port = process.env.PORT || 3001;
 http.createServer(app).listen(port, function (err) {
