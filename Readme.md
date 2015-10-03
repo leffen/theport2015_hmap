@@ -1,11 +1,18 @@
-Simple path finding service for THE Port 2015 - Pier 79
+# THE Port 2015 - Pier 79
+Simple path finding service
 
-To install
+## To install
 npm install
 
+## To run
+npm start
 
-To run
-node hmap.js
+## Test from browser
+http://localhost:3000/api/directions/10?position=[1,2]&direction=270&destination=[5,9]
 
-test from browser
-http://localhost:3001/directions/10?position=[1,2]&direction=270&destination=[5,6]
+## Continous testing
+gulp watch-test
+
+# authors
+Leffen
+Cesar
