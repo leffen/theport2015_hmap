@@ -32,15 +32,15 @@ describe('MapEnhancer', function() {
   describe('find_path', function () {
     it('It should return correct path', function () {
       var position=[1,2];
-      var destination=[5,6];
-
-      console.log(map_enhancer);
+      var destination=[5,8];
 
       var grid = map_enhancer.load_grid(1);
 
       var path = map_enhancer.resolve(position[0], position[1], destination[0], destination[1], grid);
 
-      console.log(path);
+      assert.equal(path.length,11);
+      assert.deepEqual(path[0],[1,2]);
+      assert.deepEqual(path[10],[5,8]);
     });
   });
 });
