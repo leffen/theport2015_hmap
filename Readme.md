@@ -4,12 +4,11 @@ Simple path finding service
 ## To install
 npm install
 
-
 ## To run
-node hmap.js
+npm start
 
 ## Test from browser
-http://localhost:3001/directions/10?position=[1,2]&direction=270&destination=[5,6]
+http://localhost:3000/api/directions/10?position=[1,2]&direction=270&destination=[5,9]
 
 ## Continous testing
 gulp watch-test
